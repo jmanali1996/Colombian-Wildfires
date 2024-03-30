@@ -1,4 +1,5 @@
 pyarrow
 dash
-dash-leaflet
+dash-bootstrap-components
 geopandas
+fastparquet
