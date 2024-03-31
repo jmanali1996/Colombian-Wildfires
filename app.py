@@ -92,7 +92,7 @@ app.layout = dbc.Container([
     html.Br(),
     dbc.Row(
         [
-            dbc.Col(dcc.Graph(id='line'))
+            dbc.Col(dcc.Graph(id='bar'))
         ]
     ),
     html.Br(),
@@ -105,10 +105,10 @@ app.layout = dbc.Container([
 ], style={'margin-left': 20})
 
 
-# Getting count and line chart
+# Getting count and bar chart
 @app.callback(
     Output('count-output', 'children'),
-    Output('line', 'figure'),
+    Output('bar', 'figure'),
     Input('fire-button', 'n_clicks'),
     State('fire_origin_type', 'value'),
     State('fire_time_type', 'value'),
@@ -116,7 +116,7 @@ app.layout = dbc.Container([
     State('year-variable', 'value'),
     prevent_initial_call=True
 )
-def update_line(_, selected_category, selected_value, selected_month, selected_year):
+def update_bar(_, selected_category, selected_value, selected_month, selected_year):
     if selected_month and selected_year:
         df_sub = df[(df['fire origin'].isin(selected_category)) & (df['fire time'].isin(selected_value)) & (df['month'].isin(selected_month)) & (df['year'].isin(selected_year))]
     else:
@@ -124,18 +124,18 @@ def update_line(_, selected_category, selected_value, selected_month, selected_y
     count = df_sub.shape[0]
     df_sub = df_sub.groupby(["date","fire origin"])["brightness"].mean().reset_index()
     print(df_sub)
-    fig_line = px.bar(
+    fig_bar = px.bar(
         df_sub,
         x="date",
         y="brightness",
         labels={"brightness": "fire temperature (K)"},
         color="fire origin",
         barmode='group',
-        title=f"Line Chart for {selected_month} {selected_year}",
+        title=f"Bar Chart for {selected_month} {selected_year}",
         width=1400,
         height=700
         )
-    return f"Fire instances: {count}", fig_line
+    return f"Fire instances: {count}", fig_bar
 
 # Getting map
 @app.callback(
