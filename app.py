@@ -4,7 +4,7 @@ import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas as pd
 
-# Load historic wildfile data and make necessary changes
+# Load historic wildlife data and make necessary changes
 df = pd.read_parquet('https://raw.githubusercontent.com/jmanali1996/Colombian-Wildfires/main/Data/col_2000-2024.parquet')
 df['type'] = df['type'].fillna(df['type'].mode()[0])
 df = df.astype({"type": 'str'})
@@ -26,7 +26,7 @@ app.layout = dbc.Container([
     html.H5("The line graph and map showcase the pattern of fire frequency and the spread of fires from 2000-2024", style={'text-align': 'center'}),
     html.H6("Kindly use the filters to get the desired insights."),
     # Fire origin checklist
-    html.Label(children=['Fire origin:'], style={'color':'white', 'font-weight': 'bold'}),
+    html.Label(children=['Fire origin:'], style={'color': 'white', 'font-weight': 'bold'}),
     dcc.Checklist(
         id='fire_origin_type',
         options=df['fire origin'].unique(),
@@ -36,7 +36,7 @@ app.layout = dbc.Container([
     ),
     html.Br(),
     # Fire time checklist
-    html.Label(children=['Fire time:'], style={'color':'white', 'font-weight': 'bold'}),
+    html.Label(children=['Fire time:'], style={'color': 'white', 'font-weight': 'bold'}),
     dcc.Checklist(
         id='fire_time_type',
         options=df['fire time'].unique(),
@@ -47,7 +47,7 @@ app.layout = dbc.Container([
     html.Br(),
     # Months dropdown
     html.Div([
-        html.Label(children=['Month:'], style={'color':'white', 'font-weight': 'bold'}),
+        html.Label(children=['Month:'], style={'color': 'white', 'font-weight': 'bold'}),
         dcc.Dropdown(
             id='month-variable',
             options=[{'label':m,'value':m} for m in sorted(df['month'].unique())],
@@ -59,7 +59,7 @@ app.layout = dbc.Container([
     ], style={'display': 'inline-block', 'margin-right': 20, 'width': 300}),
     # Years dropdown
     html.Div([
-        html.Label(children=['Year:'], style={'color':'white', 'font-weight': 'bold'}),
+        html.Label(children=['Year:'], style={'color': 'white', 'font-weight': 'bold'}),
         dcc.Dropdown(
             id='year-variable',
             options=[{'label':y,'value':y} for y in sorted(df['year'].unique())],
@@ -88,7 +88,7 @@ app.layout = dbc.Container([
     html.Br(),
     html.Br(),
     # Fire instances count
-    html.Div(id='count-output', style={'color':'white', 'font-weight': 'bold'}),
+    html.Div(id='count-output', style={'color': 'white', 'font-weight': 'bold'}),
     html.Br(),
     dbc.Row(
         [
@@ -109,7 +109,7 @@ app.layout = dbc.Container([
 @app.callback(
     Output('count-output', 'children'),
     Output('line', 'figure'),
-    Input('fire-button','n_clicks'),
+    Input('fire-button', 'n_clicks'),
     State('fire_origin_type', 'value'),
     State('fire_time_type', 'value'),
     State('month-variable', 'value'),
@@ -156,9 +156,9 @@ def update_map(_, selected_category, selected_value, map_theme, selected_month, 
     print(len(df_sub))
     fig_map = px.scatter_mapbox(
         df_sub,
-        lat="latitude" ,
+        lat="latitude",
         lon="longitude",
-        hover_data={"latitude":False, "longitude":False, "date": False},
+        hover_data={"latitude": False, "longitude": False, "date": False},
         color="brightness",
         labels={"brightness": "fire temperature (K)"},
         animation_frame="date",
