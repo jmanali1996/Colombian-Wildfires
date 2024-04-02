@@ -3,3 +3,4 @@ dash
 dash-bootstrap-components
 geopandas
 fastparquet
+datashader
