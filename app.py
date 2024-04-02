@@ -30,7 +30,7 @@ agg = cvs.points(df, x="latitude", y="longitude")
 coords_lat, coords_lon = agg.coords['latitude'].values, agg.coords['longitude'].values
 coordinates = [[coords_lon[0], coords_lat[0]],
                [coords_lon[-1], coords_lat[0]],
-               [coords_lon[-1], coords_lat[-1]],
+               [coords_lon[-1], coords_lat[-1]], 
                [coords_lon[0], coords_lat[-1]]]
 img = tf.shade(agg, cmap=fire, how='eq_hist')[::-1].to_pil()
 
