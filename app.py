@@ -2,7 +2,11 @@ from dash import Dash, html, dcc, Input, Output, State
 import dash
 import dash_bootstrap_components as dbc
 import plotly.express as px
+import plotly.graph_objs as go
 import pandas as pd
+import datashader as ds
+from colorcet import fire
+import datashader.transfer_functions as tf
 
 # Load historic wildlife data and make necessary changes
 df = pd.read_parquet('https://raw.githubusercontent.com/jmanali1996/Colombian-Wildfires/main/Data/col_2000-2024.parquet')
@@ -19,6 +23,16 @@ df = df.astype({"acq_date": 'str', "daynight": 'str'})
 df.loc[df['daynight'] == 'D', 'daynight'] = "Day time fire"
 df.loc[df['daynight'] == 'N', 'daynight'] = "Night time fire"
 df = df.rename(columns={"type": "fire origin", "acq_date": "date", "daynight": "fire time"})
+
+# Datashader image
+cvs = ds.Canvas(plot_width=1400, plot_height=700)
+agg = cvs.points(df, x="latitude", y="longitude")
+coords_lat, coords_lon = agg.coords['latitude'].values, agg.coords['longitude'].values
+coordinates = [[coords_lon[0], coords_lat[0]],
+               [coords_lon[-1], coords_lat[0]],
+               [coords_lon[-1], coords_lat[-1]],
+               [coords_lon[0], coords_lat[-1]]]
+img = tf.shade(agg, cmap=fire, how='eq_hist')[::-1].to_pil()
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.CYBORG])
 app.layout = dbc.Container([
@@ -131,7 +145,7 @@ def update_bar(_, selected_category, selected_value, selected_month, selected_ye
         labels={"brightness": "fire temperature (K)"},
         color="fire origin",
         barmode='group',
-        title=f"Bar Chart for {selected_month} {selected_year}",
+        title=f"Bar Chart for {selected_value} {selected_month} {selected_year}",
         width=1400,
         height=700
         )
@@ -164,11 +178,18 @@ def update_map(_, selected_category, selected_value, map_theme, selected_month, 
         animation_frame="date",
         mapbox_style=map_theme,
         zoom=5,
-        title=f"Map for {selected_month} {selected_year}",
         width=1400,
         height=700
         )
-    fig_map.update_layout(title=f'Map for {selected_month} {selected_year}')
+    fig_map.update_layout(title=f'Map for {selected_value} {selected_month} {selected_year}',
+                  mapbox_layers=[
+                      {
+                    "sourcetype": "image",
+                    "source": img,
+                    "coordinates": coordinates
+                      }
+                  ]
+    )
     return fig_map
 
 if __name__ == '__main__':
