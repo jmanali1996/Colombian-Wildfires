@@ -3,3 +3,5 @@ dash
 dash-bootstrap-components
 geopandas
 fastparquet
+pandas
+scipy==1.12
