@@ -6,13 +6,9 @@
 
 MODIS Collection 6 Hotspot / Active Fire Detections MCD14ML distributed from NASA FIRMS which is near real-time information on allegedly active fires.
 
-### Available online at:
+Available online at: https://earthdata.nasa.gov/firms
 
-https://earthdata.nasa.gov/firms
-
-### Research paper:
-
-doi:10.5067/FIRMS/MODIS/MCD14ML
+Research paper: doi:10.5067/FIRMS/MODIS/MCD14ML
 
 ### Here is the video tutorial of the app which showcases its functioning and features:
 
