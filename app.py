@@ -5,7 +5,7 @@ import plotly.express as px
 import plotly.graph_objs as go
 import pandas as pd
 
-# Load historic wildlife data and make necessary changes
+# EDA
 df = pd.read_parquet('https://raw.githubusercontent.com/jmanali1996/Colombian-Wildfires/main/Data/col_2000-2024.parquet')#, low_memory=False)
 df['type'] = df['type'].fillna(df['type'].mode()[0])
 df = df.astype({"type": 'str'})
@@ -32,7 +32,7 @@ app.layout = dbc.Container([
     html.H5("The bar graph and map showcase the pattern of fire frequency and the spread of fires from 2000-2024", style={'text-align': 'center'}),
     html.Br(),
     html.Div([
-    # Fire origin checklist
+    #checklists
         html.Div([
             html.Label(children=['Fire origin:'], style={'color': 'black', 'font-weight': 'bold'}),
             dcc.Checklist(
@@ -43,7 +43,6 @@ app.layout = dbc.Container([
                 labelStyle={'margin-right': 20}
             )
         ], style={'display': 'inline-block', 'width': '56%', 'margin-right': 20, 'vertical-align': 'top'}),
-    # Fire time checklist
         html.Div([
             html.Label(children=['Fire time:'], style={'color': 'black', 'font-weight': 'bold'}),
             dcc.Checklist(
@@ -57,7 +56,7 @@ app.layout = dbc.Container([
     ]),
     html.Br(),
     html.Div([
-    # Months dropdown
+    #dropdowns
         html.Div([
             html.Label(children=['Month:'], style={'color': 'black', 'font-weight': 'bold'}),
             dcc.Dropdown(
@@ -69,7 +68,6 @@ app.layout = dbc.Container([
                 placeholder="Select a month"
             ),
         ], style={'display': 'inline-block', 'width': '56%', 'margin-right': 20, 'vertical-align': 'top'}),
-    # Years dropdown
         html.Div([
             html.Label(children=['Year:'], style={'color': 'black', 'font-weight': 'bold'}),
             dcc.Dropdown(
@@ -86,7 +84,7 @@ app.layout = dbc.Container([
     dbc.Button(id='fire-button', children="Submit", n_clicks=0),
     html.Br(),
     html.Br(),
-    # Fire instances count
+    #fire instances count
     html.Div(id='count-output', style={'color': 'black', 'font-weight': 'bold'}),
     html.Br(),
     html.Div(id='placeholder', children="Select your preferences to view the bar graph and map"),
@@ -94,7 +92,7 @@ app.layout = dbc.Container([
     dbc.Row([dbc.Col(dcc.Graph(id='map'))]),
 ], style={'margin-left': 10})
 
-# Getting count and bar graph and map
+# COUNT, BAR GRAPH AND MAP CALLBACK
 @app.callback(
     [Output('count-output', 'children'), 
     Output('bar', 'figure'),
