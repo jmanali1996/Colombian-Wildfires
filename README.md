@@ -1,19 +1,20 @@
-# wildfires_data_app
-In this repostory will be shared the dataset and the tutorials, for using Nasa's FIRM MODIS information for Colombia from **2000 to 2022**.
-## This project will develop a web data app that displays near real-time information on allegedly active fires, sourced from NASA's satellite data
-***Planned Features***
-- The app will be used by the public to report the existence of fires
-- Share information on social media platforms
-- Help alert relevant authorities.
-- Historical data exploration to visualize the increase in fire frequency and the spread of fires since 2000
+# Colombian Wildfires
 
-**This project is developed as the March project from the Charming data community**
-https://charming-data.circle.so/home
+## A dashboard visualizes fire incidents in Colombia from 2000 to 2024, with filters, bar graphs, and an animated map. It helps users explore trends, identify high-risk areas, and understand the distribution of fires. 
 
+### Data source:
 
-MODIS Collection 6 Hotspot / Active Fire Detections MCD14ML distributed from NASA FIRMS. Available online https://earthdata.nasa.gov/firms. doi:10.5067/FIRMS/MODIS/MCD14ML
+MODIS Collection 6 Hotspot / Active Fire Detections MCD14ML distributed from NASA FIRMS which is near real-time information on allegedly active fires.
 
-Please note: 
+### Available online at:
 
-    MODIS Collection 61 has a temporal coverage from 01 November 1, 2020 to present
-    MODIS Collection 6 has a temporal coverage from November 11, 2000 to November 30, 2020
+https://earthdata.nasa.gov/firms
+
+### Research paper:
+
+doi:10.5067/FIRMS/MODIS/MCD14ML
+
+### Here is the video tutorial of the app which showcases its functioning and features:
+
+https://github.com/user-attachments/assets/640d8c15-44ca-44d1-86b1-a96d8f34f489
+
